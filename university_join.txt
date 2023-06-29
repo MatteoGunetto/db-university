@@ -67,7 +67,7 @@ nome
 Matematica` (54)
 
 ------------------------SOLUZIONE--------------------
-  SELECT DISTINCT `teachers`.name AS `nome insegnante`, `teachers`.surname AS `cognome`, `departments`.name AS `nome dipartimento`
+SELECT DISTINCT `teachers`.name AS `nome insegnante`, `teachers`.surname AS `cognome`, `departments`.name AS `nome dipartimento`
 FROM `teachers`
 JOIN `course_teacher` ON teachers.id = course_teacher.teacher_id
 JOIN `courses` ON course_teacher.course_id = courses.id
@@ -83,4 +83,27 @@ Bonus
 per ogni esame, stampando anche il voto massimo. Successivamente,
 filtrare i tentativi con voto minimo 18.
 
+------------------------SOLUZIONE--------------------
+SELECT `students`.`surname`, `students`.`name`, COUNT(`courses`.`name`) AS "tentativi", `courses`.`name`, MAX(`exam_student`.`vote`) AS "max_voto"
+FROM `exam_student` 
+JOIN `exams`
+ON `exam_student`.`exam_id` = `exams`.`id`
+JOIN `courses`
+ON `exams`.`course_id` = `courses`.`id`
+JOIN `students`
+ON `exam_student`.`student_id` = `students`.`id`
+GROUP BY `students`.`surname`, `students`.`name`, `courses`.`name`;
 
+CON VOTO MINIMO (18)
+
+SELECT `students`.`surname`, `students`.`name`, COUNT(`courses`.`name`) AS "tentativi", `courses`.`name`, MAX(`exam_student`.`vote`) AS "max_voto"
+FROM `exam_student` 
+JOIN `exams`
+ON `exam_student`.`exam_id` = `exams`.`id`
+JOIN `courses`
+ON `exams`.`course_id` = `courses`.`id`
+JOIN `students`
+ON `exam_student`.`student_id` = `students`.`id`
+WHERE `exam_student`.`vote` >= 18
+GROUP BY `students`.`surname`, `students`.`name`, `courses`.`name`;
+-----------------------------------------------------   
