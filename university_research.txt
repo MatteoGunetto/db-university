@@ -26,6 +26,12 @@
     FROM `students`
     WHERE `date_of_birth` < '1993%';
 -----------------------------------------------------
+------------------------SOLUZIONE  più mantenibile -------------------
+   SELECT *
+    FROM `students`
+    WHERE YEAR (now) - YEAR (date_of_birth)>30
+-----------------------------------------------------
+
 
 
 4. Selezionare tutti i corsi del primo semestre del primo anno di un qualsiasi corso di laurea `(286)`
@@ -33,7 +39,7 @@
 ------------------------SOLUZIONE -------------------
     SELECT *
     FROM `courses`
-    WHERE `period` = 'I semestre'
+    WHERE `period` LIKE 'I semestre'
     AND `year` = 1;
 -----------------------------------------------------
 
@@ -60,7 +66,6 @@
 7. Contare il numero di dipartimenti di cui e' composta l'università `(12)`
 
 ------------------------SOLUZIONE -------------------
-  #SOLUZIONE ->
     SELECT COUNT(*)
     FROM `departments`;
 -----------------------------------------------------
@@ -69,48 +74,7 @@
 8. Contare gli insegnanti che non hanno un numero di telefono `(50)`
 
 ------------------------SOLUZIONE -------------------
-  SELECT *
+  SELECT COUNT(*)
     FROM `teachers`
     WHERE `phone` IS NULL;
 -----------------------------------------------------
-
-
--------------------------------------------------------------------GROUP BY---------------------------------------------------------------------
-
-1. Contare quanti iscritti ci sono stati ogni anno
-
-------------------------SOLUZIONE -------------------
- SELECT COUNT(id), YEAR(enrolment_date)
-FROM students
-GROUP BY YEAR(enrolment_date);
------------------------------------------------------
-
-
-2. Contare gli insegnanti che hanno l'ufficio nello stesso edificio
-
-------------------------SOLUZIONE -------------------
- SELECT COUNT(id), `office_address`
-FROM `teachers`
-GROUP BY office_address;
------------------------------------------------------
-
-
-3. Calcolare la media dei voti di ogni appello d'esame
-
-------------------------SOLUZIONE -------------------
-SELECT AVG(`vote`), `exam_id`
-FROM `exam_student`
-GROUP BY `exam_id`;
------------------------------------------------------
-
-
-4. Contare quanti corsi di laurea ci sono per ogni dipartimento
-
-------------------------SOLUZIONE -------------------
-SELECT COUNT(id), `department_id`
-FROM `degrees`
-GROUP BY `department_id`;
------------------------------------------------------
-
-
-------------------------------------------------------------------------------------------------------------------------------------------------
